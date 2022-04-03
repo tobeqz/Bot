@@ -95,12 +95,12 @@ let getPendingWork = (work, rgbaOrder, rgbaCanvas) => {
     currentPlaceCanvas = document.body.appendChild(currentPlaceCanvas);
 
     Toastify({
-        text: 'Accesstoken ophalen...',
+        text: 'Getting access token...',
         duration: DEFAULT_TOAST_DURATION_MS
     }).showToast();
     accessToken = await getAccessToken();
     Toastify({
-        text: 'Accesstoken opgehaald!',
+        text: 'Access token fetched!',
         duration: DEFAULT_TOAST_DURATION_MS
     }).showToast();
 
@@ -117,7 +117,7 @@ let getPendingWork = (work, rgbaOrder, rgbaCanvas) => {
 
 function connectSocket() {
     Toastify({
-        text: 'Verbinden met PlaceNL server...',
+        text: 'Connecting to command server',
         duration: DEFAULT_TOAST_DURATION_MS
     }).showToast();
 
@@ -129,7 +129,7 @@ function connectSocket() {
 
     socket.onopen = function () {
         Toastify({
-            text: 'Connected to Deelwoken command server!',
+            text: 'Connected to Deepwoken command server!',
             duration: DEFAULT_TOAST_DURATION_MS
         }).showToast();
         socket.send(JSON.stringify({ type: 'getmap' }));
@@ -153,7 +153,7 @@ function connectSocket() {
                 currentOrderCtx = await getCanvasFromUrl(`https://place.tobeqz-on.top/maps/${data.data}`, currentOrderCanvas, 0, 0, true);
                 order = getRealWork(currentOrderCtx.getImageData(0, 0, 2000, 2000).data);
                 Toastify({
-                    text: `Loaded new map, ${order.length} pixels in total`,
+                    text: `Loaded new map, ${order.length} pixels total`,
                     duration: DEFAULT_TOAST_DURATION_MS
                 }).showToast();
                 break;
@@ -193,7 +193,7 @@ async function attemptPlace() {
         ctx = await getCanvasFromUrl(await getCurrentImageUrl('2'), currentPlaceCanvas, 0, 1000, false)
         ctx = await getCanvasFromUrl(await getCurrentImageUrl('3'), currentPlaceCanvas, 1000, 1000, false)
     } catch (e) {
-        console.warn('Fout bij ophalen map: ', e);
+        console.warn('Error fetching map:', e);
         Toastify({
             text: 'Error while trying to load map, retrying in 10 seconds...',
             duration: DEFAULT_TOAST_DURATION_MS
